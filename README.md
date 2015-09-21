@@ -1,6 +1,6 @@
 # upgrade-utils
 
-**A tool from [NodeSource](https://nodesource.com/) to help with the process of upgrading modules to the latest version of Node.js, replacing old [NAN](https://github.com/nodejs/nan) C++ bindings and adjusting for Node.js API changes.**
+**A tool from [NodeSource](https://nodesource.com/) to help with the process of upgrading modules to the latest version of Node.js latest Node version (currently v4), replacing old [NAN](https://github.com/nodejs/nan) C++ bindings and adjusting for Node.js API changes.**
 
 ## SYPNOSIS
 `upgrade-utils [-p <path>] [-e <extensions>] [OPTIONS]`

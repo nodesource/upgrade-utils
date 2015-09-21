@@ -1,0 +1,66 @@
+<html>
+<head>
+  <title></title>
+  <link rel="stylesheet" href="{{asset 'editor.css'}}">
+  <link rel="stylesheet" href="{{asset 'markdownPreview.css'}}">
+  <link href='http://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,700,300italic,400italic,700italic' rel='stylesheet' type='text/css'>
+</head>
+<body class="">
+  <div class="nav">
+    <img src="{{asset 'logo-white.svg'}}"/>
+    <p>Upgrade utils report</p>
+  </div>
+
+  <section id="diffs">
+    <div>
+    {{#if update}}
+      <h3 class="updated">Your files were updated according to the changes described below, to complete the update follow these steps:</h3>
+      <ul>
+        <li>Remove your Nan dependency with <code>npm remove nan --save</code>
+        <li>Add Nan with <code>npm install nan --save</code> to get the last version
+        <li>Rebuild your module <code>node-gyp rebuild</code>
+        <li>Check if there are errors and manually fix those</li>
+      </ul>
+      <hr>
+    {{else}}
+      <h3 class="preview">Your files were not touched this is a preview for all changes to apply in your files, to write these changes run the tool with the <code>--update</code> flag</h3>
+    {{/if}}
+    </div>
+    {{#each diffs}}
+      <div>
+          <h3>Lines changed in {{file}}</h3>
+          <div class="diff">
+            {{#each changes}}
+              {{#with added}}
+                <pre><code class="added">+ {{../value}}</code></pre>
+              {{/with}}
+              {{#with removed}}
+                <pre><code class="removed">- {{../value}}</code></pre>
+              {{/with}}
+            {{/each}}
+          </div>
+      </div>
+    {{/each}}
+
+  </section>
+
+  <section id="suggestions">
+    <h1>Suggested changes in your JavaScript files</h1>
+    {{#each suggestions}}
+      <div>
+        <hr>
+        <h2>{{doc}}</h2>
+        <p>Please review changes in Node API for {{doc}} module used in these files:</p>
+        <ul>
+          {{#each files}}
+          <li>{{this}}</li>
+          {{/each}}
+        </ul>
+        <div>
+          {{{content}}}
+        </div>
+      </div>
+    {{/each}}
+  </section>
+</body>
+</html>

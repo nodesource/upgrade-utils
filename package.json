@@ -1,0 +1,51 @@
+{
+  "name": "upgrade-utils",
+  "version": "0.0.1",
+  "description": "A tool to help with the process of upgrading modules to the latest version of Node.js, replacing old NAN C++ bindings and adjusting for Node.js API changes",
+  "main": "index.js",
+  "scripts": {
+    "lint": "standard .",
+    "pretest": "npm run-script lint",
+    "test": "istanbul cover ./node_modules/.bin/_mocha test",
+    "posttest": "istanbul check-coverage --statements 85 --branches 70 --functions 100 --lines 90 && rm -rf coverage",
+    "prepublish": "npm test && npm prune"
+  },
+  "keywords": [
+    "Node",
+    "v4",
+    "NAN",
+    "native",
+    "update",
+    "upgrade"
+  ],
+  "author": "NodeSource <npm@nodesource.com > (https://nodesource.com)",
+  "contributors": [
+    "Adrián Estrada <adrian@nodesource.com> (https://github.com/edsadr)",
+    "Julián Duque <julian@nodesource.com> (https://github.com/julianduque)"
+  ],
+  "bin": {
+    "upgrade-utils": "./bin/upgrade-utils"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/nodesource/upgrade-utils"
+  },
+  "license": "MIT",
+  "dependencies": {
+    "chalk": "^1.1.1",
+    "diff": "^2.1.0",
+    "handlebars": "^4.0.2",
+    "marked": "^0.3.5",
+    "minimist": "^1.2.0",
+    "msee": "^0.1.1",
+    "opener": "^1.4.1"
+  },
+  "devDependencies": {
+    "adm-zip": "^0.4.7",
+    "chai": "^3.2.0",
+    "istanbul": "^0.3.20",
+    "mocha": "^2.3.2",
+    "rimraf": "^2.4.3",
+    "standard": "^5.1.1"
+  }
+}

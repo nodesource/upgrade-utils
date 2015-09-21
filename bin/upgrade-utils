@@ -1,0 +1,39 @@
+#!/usr/bin/env node
+
+var path = require('path')
+var upgradeUtils = require('../index.js')
+var msee = require('msee')
+var mseeOptions = {
+  paragraphStart: '',
+  paragraphEnd: '\n\n'
+}
+
+// Setting arguments
+var args = require('minimist')(process.argv.slice(2), {
+  string: ['extensions', 'path'],
+  boolean: ['help', 'quiet', 'update'],
+  alias: {
+    e: 'extensions',
+    h: 'help',
+    q: 'quiet',
+    p: 'path',
+    u: 'update'
+  },
+  default: {
+    e: '.c,.cc,.cpp,.h,.hh,.js',
+    p: '.',
+    q: false
+  },
+  unknown: function (cmd) {
+    console.error("'%s' is not a upgrade-utils option. " + "See 'upgrade-utils --help'.", cmd)
+    process.exit(1)
+  }
+})
+
+if (args.help) {
+  var help = msee.parseFile(path.resolve(__dirname, '..', 'README.md'), mseeOptions)
+  console.log(help)
+  process.exit(0)
+}
+
+upgradeUtils(args.path, args.update, args.extensions, args.quiet)

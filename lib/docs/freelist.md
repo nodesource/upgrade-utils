@@ -1,0 +1,2 @@
+- The `freelist` module was only ever intended for internal use and is now deprecated.
+  - Refs: [`fef87fe`](https://github.com/nodejs/node/commit/fef87fee1de60c3d5db2652ee2004a6e78d112ff), [#569](https://github.com/nodejs/node/issues/569)

@@ -1,0 +1,239 @@
+body, html {
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  background: #fff;
+  color: #444;
+  font-family: 'Source Sans Pro', sans-serif;
+  -webkit-font-smoothing: antialiased;
+}
+
+::selection {
+  background: #ff0;
+}
+
+.nav {
+  display: flex;
+  height: 60px;
+  width: 100%;
+  position: fixed;
+  top: 0;
+  left: 0;
+  background: rgba(46,53,53,.95);
+  align-items: center;
+}
+
+.nav img {
+  height: 60%;
+  margin-left: 20px;
+}
+
+.nav p {
+  color: rgba(137,161,157,1);
+  font-size: 1rem;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+  margin: 0;
+  margin-left: 20px;
+  padding-left: 20px;
+  border-left: 1px solid rgba(255,255,255,.1);
+}
+
+#mdForm > * {
+  box-sizing: border-box;
+  margin: 0;
+}
+
+#editor .label {
+  position: fixed;
+  top: 100px;
+  left: 60px;
+  color: #fff;
+  background: rgba(100,125,125,.35);
+  height: auto;
+  width: auto;
+  padding: 0em .4em;
+  border-radius: 5px;
+}
+
+#editor .label.preview {
+  left: 60%;
+  transform: translate(60px, 0);
+}
+
+
+#mdForm {
+  height: 100%;
+  width: 60%;
+  background: #edf0ef;
+  padding: 160px 60px 0px 60px;
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+}
+
+#mdForm input.meta {
+  display: block;
+  width: 100%;
+  background: transparent;
+  border: 0;
+  font-size: 1.2rem;
+  font-family: 'Source Code Pro', sans-serif;
+  border: none;
+  outline: none;
+  padding: 20px 0;
+  border-bottom: 1px dashed #cdd0cf;
+}
+
+#mdForm label {
+  color: #8d908f;
+  margin-top: 20px;
+}
+
+#mdForm label:first-of-type {
+  margin: 0;
+}
+
+textarea.main {
+  display: block;
+  font-family: 'Source Code Pro', sans-serif;
+  padding-top: 20px;
+  width: 100%;
+  height: auto;
+  margin: 0 auto;
+  -webkit-appearance: none;
+  resize: none;
+  border: none;
+  outline: none;
+  font-size: 1.2rem;
+  background: transparent;
+  flex-grow: 1;
+  overflow: scroll-y;
+}
+
+textarea::selection, input.meta::selection  {
+  color: #660;
+}
+
+textarea.hidden {
+  display: none;
+}
+
+#preview {
+  width: 40%;
+  height: 100%;
+  padding: 160px 60px 60px 60px;
+  overflow-y: scroll;
+  position: absolute;
+  top: 0;
+  right: 0;
+}
+
+button#mdFormButton {
+  display: block;
+  position: fixed;
+  z-index: 2;
+  font-family: 'Source Sans Pro', sans-serif;
+  top: 0;
+  right: 0;
+  color: #fff;
+  background: rgba(35,40,40,1);
+  border: 0;
+  font-size: 1rem;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+  padding: 20px;
+  text-align: center;
+  cursor: pointer;
+  width: 200px;
+  box-sizing: border-box;
+  transition: all 500ms;
+}
+
+button#mdFormButton:hover {
+  background: rgba(25,30,30,1);
+}
+
+.toolbar {
+  display: flex;
+  z-index: 3;
+  position: fixed;
+  top: 0;
+  right: -100%;
+  width: 100%;
+  color: #fff;
+  align-items: center;
+  justify-content: flex-end;
+  transition: all 500ms;
+}
+
+.toolbar {
+  transition: all 500ms;
+}
+
+.toolbar a {
+  text-decoration: none;
+  color: #fff;
+  background: rgba(35,40,40,1);
+  font-size: 1rem;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+  padding: 20px;
+  text-align: center;
+  width: 200px;
+  box-sizing: border-box;
+}
+
+.toolbar a:hover {
+  background: rgba(25,30,30,1);
+}
+
+body.submitted button#mdFormButton, body.pdfCreated button#mdFormButton {
+  right: -100%;
+}
+
+body.submitted .toolbar {
+  right: 0;
+}
+
+body.submitted .toolbar a {
+  display: none;
+}
+
+body.submitted .toolbar:after {
+  display: block;
+  width: auto;
+  font-size: 1rem;
+  font-style: italic;
+  color: #5dc295;
+  padding: 20px;
+  text-align: center;
+  box-sizing: border-box;
+  content: 'Fabricating typographic solution...';
+}
+
+body.pdfCreated .toolbar {
+  right: 0;
+  animation-name: transitionIn;
+  animation-duration: 250ms;
+  animation-iteration-count: 1;
+  -webkit-animation-name: transitionIn;
+  -webkit-animation-duration: 250ms;
+  -webkit-animation-iteration-count: 1;
+}
+
+body.pdfCreated .toolbar a {
+  display: block;
+}
+
+@keyframes transitionIn {
+  from   { right: -100%; }
+  to     { right: 0%; }
+}
+
+@-webkit-keyframes transitionIn {
+  from   { right: -100%; }
+  to     { right: 0%; }
+}

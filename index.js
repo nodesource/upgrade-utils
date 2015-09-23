@@ -1,4 +1,5 @@
 var fs = require('fs')
+var async = require('async')
 var path = require('path')
 var diff = require('diff')
 var marked = require('marked')
@@ -8,46 +9,12 @@ var opener = require('opener')
 
 var replacements = require('./lib/replacements.js')()
 var suggestions = require('./lib/suggestions.js')()
-var processed = 0
 var changed = []
 var suggested = {}
 var dir, update, filters, quiet, callback
 
-// Recursive function searching files and directories in a path to process files
-function searchFiles (file) {
-  fs.lstat(file, function (err, stats) {
-    if (err) throw err
-
-    var isFile = stats.isFile()
-
-    if (stats.isSymbolicLink()) {
-      return
-    }
-
-    // Looking just for filtered extensions
-    if (isFile && filters.indexOf(path.extname(file)) !== -1) {
-      console.log('Processing ' + file)
-
-      // Adding the file to the queue
-      processed++
-      processFile(file)
-    } else if (stats.isDirectory() && file.indexOf('node_modules') === -1) {
-      // Reading directories
-      fs.readdir(file, function (err, files) {
-        if (err) throw err
-        for (var i = 0; i < files.length; i++) {
-          // Avoid hidden files and directories
-          if (/^[^.].*$/.test(files[i])) {
-            searchFiles(path.join(file, files[i]))
-          }
-        }
-      })
-    }
-  })
-}
-
 // Function replacing all regex in a file and returning the new content
-function processFile (file) {
+var queue = async.queue(function (file, callback) {
   fs.readFile(file, 'utf-8', function (err, text) {
     if (err) {
       if (err.code === 'EMFILE') {
@@ -71,18 +38,53 @@ function processFile (file) {
       // Writing the file if update is true
       if (update) {
         fs.writeFile(file, content, function (err) {
-          if (err) throw err
+          if (err) return callback(err)
           console.log('The file ' + file + ' was updated')
+          return callback(null, file)
         })
+      } else {
+        return callback(null, file)
       }
+    } else {
+      return callback(null, file)
+    }
+  })
+}, 5)
+
+queue.drain = function () {
+  printResults()
+}
+
+// Recursive function searching files and directories in a path to process files
+function searchFiles (file) {
+  fs.lstat(file, function (err, stats) {
+    if (err) throw err
+
+    var isFile = stats.isFile()
+
+    if (stats.isSymbolicLink()) {
+      return
     }
 
-    // reducing the queue
-    processed--
+    // Looking just for filtered extensions
+    if (isFile && filters.indexOf(path.extname(file)) !== -1) {
+      console.log('Processing ' + file)
 
-    // Printing results after process all files
-    if (processed === 0) {
-      printResults()
+      // Adding the file to the queue
+      queue.push(file, function (err, cfile) {
+        if (err) throw err
+      })
+    } else if (stats.isDirectory() && file.indexOf('node_modules') === -1) {
+      // Reading directories
+      fs.readdir(file, function (err, files) {
+        if (err) throw err
+        for (var i = 0; i < files.length; i++) {
+          // Avoid hidden files and directories
+          if (/^[^.].*$/.test(files[i])) {
+            searchFiles(path.join(file, files[i]))
+          }
+        }
+      })
     }
   })
 }

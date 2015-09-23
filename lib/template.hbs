@@ -1,16 +1,18 @@
 <html>
 <head>
-  <title></title>
+  <title>Upgrade utils report</title>
+  <meta charset="UTF-8">
   <link rel="stylesheet" href="{{asset 'editor.css'}}">
   <link rel="stylesheet" href="{{asset 'markdownPreview.css'}}">
   <link href='http://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,700,300italic,400italic,700italic' rel='stylesheet' type='text/css'>
 </head>
-<body class="">
+<body>
   <div class="nav">
-    <img src="{{asset 'logo-white.svg'}}"/>
+    <a href="http://nodesource.com" target="_blank"><img src="{{asset 'logo-white.svg'}}"/></a>
     <p>Upgrade utils report</p>
   </div>
 
+{{#if diffs}}
   <section id="diffs">
     <div>
     {{#if update}}
@@ -41,14 +43,14 @@
           </div>
       </div>
     {{/each}}
-
   </section>
+{{/if}}
 
+{{#if suggestions}}
   <section id="suggestions">
     <h1>Suggested changes in your JavaScript files</h1>
     {{#each suggestions}}
       <div>
-        <hr>
         <h2>{{doc}}</h2>
         <p>Please review changes in Node API for {{doc}} module used in these files:</p>
         <ul>
@@ -60,7 +62,9 @@
           {{{content}}}
         </div>
       </div>
+      <hr>
     {{/each}}
   </section>
+{{/if}}
 </body>
 </html>

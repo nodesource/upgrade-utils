@@ -1,6 +1,6 @@
 {
   "name": "upgrade-utils",
-  "version": "1.0.2",
+  "version": "1.0.3",
   "description": "A tool to help with the process of upgrading modules to the latest version of Node.js latest Node version (currently v4), replacing old NAN C++ bindings and adjusting for Node.js API changes",
   "main": "index.js",
   "scripts": {

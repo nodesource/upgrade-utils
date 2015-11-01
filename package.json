@@ -35,6 +35,7 @@
     "async": "^1.4.2",
     "chalk": "^1.1.1",
     "diff": "^2.1.0",
+    "graceful-fs": "^4.1.2",
     "handlebars": "^4.0.2",
     "marked": "^0.3.5",
     "minimist": "^1.2.0",

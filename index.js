@@ -1,4 +1,4 @@
-var fs = require('fs')
+var fs = require('graceful-fs')
 var async = require('async')
 var path = require('path')
 var diff = require('diff')
@@ -17,10 +17,6 @@ var dir, update, filters, quiet, callback
 var queue = async.queue(function (file, callback) {
   fs.readFile(file, 'utf-8', function (err, text) {
     if (err) {
-      if (err.code === 'EMFILE') {
-        console.error('Too many files, increase your OS limit')
-        process.exit(1)
-      }
       throw err
     }
 
